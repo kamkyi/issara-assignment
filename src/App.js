@@ -12,7 +12,7 @@ class App extends Component {
     service_providers:null
   }
   componentWillMount() {
-    axios.get('https://server-dot-ilm-client-dev.appspot.com/api/v1/localization/languages')
+    axios.get('/localization/languages')
     .then(response => {
       this.setState({
           languages:response.data
@@ -22,7 +22,7 @@ class App extends Component {
 
   chooseLanguageHandler = (languageCode) => {
     // window.alert(languageCode);
-    axios.get('https://server-dot-ilm-client-dev.appspot.com/api/v1/service-providers?lang=' + languageCode)
+    axios.get('/service-providers?lang=' + languageCode)
       .then(response => {
         this.setState({
            service_providers:response.data
