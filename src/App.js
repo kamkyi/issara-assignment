@@ -5,13 +5,16 @@ import 'bootstrap/dist/css/bootstrap.min.css';
 import NavBar from './NavBar/NavBar'
 import ServiceProvider from './ServiceProvider/ServiceProvider'
 import axios from 'axios'
+import InfiniteScroll from 'react-infinite-scroll-component';
 
 class App extends Component {
+  
   state = {
     languages: [],
     service_providers: null,
     defaultLocale:localStorage['locale'] ? localStorage['locale'] : 'en'
   }
+
   componentWillMount() {
     axios.get('/localization/languages')
     .then(response => {
@@ -52,16 +55,22 @@ class App extends Component {
         <br/>
           <Row>
               {
-                this.state.service_providers ? 
-                  this.state.service_providers.map(provider => {
-                    return <Col md={4}><ServiceProvider name={provider.name}
-                      email={provider.email}
-                      website={provider.website}
-                      rating_score={provider.rating_score}
-                      rating_count={provider.rating_count}
-                      logo={provider.image}
-                    /></Col>              
+              this.state.service_providers ? 
+                <InfiniteScroll dataLength={this.state.service_providers.length}>
+                {
+                    this.state.service_providers.map(provider => {
+                      return <Col md={4}>
+                       <ServiceProvider name={provider.name}
+                          email={provider.email}
+                          website={provider.website}
+                          rating_score={provider.rating_score}
+                          rating_count={provider.rating_count}
+                          logo={provider.image}
+                        />
+                      </Col>              
                   })
+                }
+                </InfiniteScroll>
                 :null
               }
           </Row>
