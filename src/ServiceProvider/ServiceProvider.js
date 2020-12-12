@@ -16,14 +16,12 @@ const ServiceProvider = (props) => {
                     <Card.Text>
                     Website : {props.website?? 'N/A'}
                     </Card.Text>
-                    <Card.Text>
                     <h2>{Math.round(props.rating_score*10)/10}</h2> 
                     <ReactStars
                         count={5}
                         value={props.rating_score}
                         activeColor="#ffd700"
                     />
-                    </Card.Text>
                     <Card.Text>
                     <FaUserAlt/> &nbsp;
                     {props.rating_count} total

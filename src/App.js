@@ -1,11 +1,10 @@
 import './App.css';
 import { Component } from 'react';
-import {Col, Container } from 'react-bootstrap';
+import {Row , Col, Container } from 'react-bootstrap';
 import 'bootstrap/dist/css/bootstrap.min.css';
 import NavBar from './NavBar/NavBar'
 import ServiceProvider from './ServiceProvider/ServiceProvider'
 import axios from 'axios'
-import InfiniteScroll from 'react-infinite-scroll-component';
 
 class App extends Component {
 
@@ -13,7 +12,7 @@ class App extends Component {
     languages: [],
     service_providers: null,
     defaultLocale: localStorage['locale'] ? localStorage['locale'] : 'en',
-    flag:''
+    language:localStorage['language'] ? localStorage['language'] : {},
   }
 
   componentWillMount() {
@@ -27,12 +26,12 @@ class App extends Component {
         return language.code === this.state.defaultLocale;
       })
 
-      const defaultLanguageBundle = { ...this.state.languages[languageIndex] }
+      const currentLanguage = { ...this.state.languages[languageIndex] }
 
-      localStorage.setItem('flag', defaultLanguageBundle.flag)
+      localStorage.setItem('language', currentLanguage)
 
       this.setState({
-        flag:defaultLanguageBundle.flag
+        language:currentLanguage
       })
 
     });
@@ -49,13 +48,13 @@ class App extends Component {
     });
   }
 
-  chooseLanguageHandler = (languageCode, flag) => {
+  chooseLanguageHandler = (languageCode, language) => {
     
     localStorage.setItem('locale', languageCode)
-    localStorage.setItem('flag', flag)
+    localStorage.setItem('language', language)
 
     this.setState({
-      flag:flag
+      language:language
     })
     
     axios.get('/service-providers?lang=' + languageCode)
@@ -69,20 +68,18 @@ class App extends Component {
   render() {
     return (
       <div>
-        <NavBar languages={this.state.languages} chosen={this.chooseLanguageHandler} flag={this.state.flag}/>
+        <NavBar languages={this.state.languages} chosen={this.chooseLanguageHandler} language={this.state.language}/>
         <Container>
         <br />
         <br/>
               {
               this.state.service_providers ? 
-                <InfiniteScroll dataLength={this.state.service_providers.length}
-                  hasMore={true}
-                  className="row"
-                >
+                <Row>
                 {
-                    this.state.service_providers.map(provider => {
-                      return <Col md={4}>
-                       <ServiceProvider name={provider.name}
+                    this.state.service_providers.map((provider,index) => {
+                      return <Col md={4} key={index}>
+                        <ServiceProvider name={provider.name}
+                          key={provider.email}
                           email={provider.email}
                           website={provider.website}
                           rating_score={provider.rating_score}
@@ -92,7 +89,7 @@ class App extends Component {
                       </Col>              
                   })
                 }
-                </InfiniteScroll>
+                </Row>
                 :null
               }
         </Container>
