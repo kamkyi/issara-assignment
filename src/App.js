@@ -1,6 +1,6 @@
 import './App.css';
 import { Component } from 'react';
-import { Row, Col, Container } from 'react-bootstrap';
+import {Col, Container } from 'react-bootstrap';
 import 'bootstrap/dist/css/bootstrap.min.css';
 import NavBar from './NavBar/NavBar'
 import ServiceProvider from './ServiceProvider/ServiceProvider'
@@ -8,7 +8,7 @@ import axios from 'axios'
 import InfiniteScroll from 'react-infinite-scroll-component';
 
 class App extends Component {
-  
+
   state = {
     languages: [],
     service_providers: null,
@@ -53,10 +53,12 @@ class App extends Component {
         <Container>
         <br />
         <br/>
-          <Row>
               {
               this.state.service_providers ? 
-                <InfiniteScroll dataLength={this.state.service_providers.length}>
+                <InfiniteScroll dataLength={this.state.service_providers.length}
+                  hasMore={true}
+                  className="row"
+                >
                 {
                     this.state.service_providers.map(provider => {
                       return <Col md={4}>
@@ -73,7 +75,6 @@ class App extends Component {
                 </InfiniteScroll>
                 :null
               }
-          </Row>
         </Container>
       </div>
     );

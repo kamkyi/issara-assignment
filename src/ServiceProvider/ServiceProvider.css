@@ -1,0 +1,9 @@
+.card{
+    margin: 5px;
+    padding: 5px;
+    background-color: lightblue;
+    height: 660px;
+}
+.card:hover{
+    box-shadow: 1px 1px 1px #e6e6ff;
+}

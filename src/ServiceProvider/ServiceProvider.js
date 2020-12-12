@@ -1,22 +1,32 @@
-import {Card} from 'react-bootstrap'
+import { Card } from 'react-bootstrap'
+import ReactStars from "react-rating-stars-component";
+import './ServiceProvider.css'
+import { FaUserAlt } from "react-icons/fa"
+
 const ServiceProvider = (props) => {
     return (
         <div>
             <Card style={{ width: '18rem' }}>
-            <Card.Img variant="top" src={props.logo} />
+            <Card.Img height="280px" variant="top" src={props.logo} />
             <Card.Body>
                 <Card.Title>{props.name}</Card.Title>
                 <Card.Text>
-                    {props.email}
+                    Email : {props.email??'N/A'}
                     </Card.Text>
                     <Card.Text>
-                    {props.website}
+                    Website : {props.website?? 'N/A'}
                     </Card.Text>
                     <Card.Text>
-                    {props.rating}
+                    <h2>{Math.round(props.rating_score*10)/10}</h2> 
+                    <ReactStars
+                        count={5}
+                        value={props.rating_score}
+                        activeColor="#ffd700"
+                    />
                     </Card.Text>
                     <Card.Text>
-                    {props.rating_count}
+                    <FaUserAlt/> &nbsp;
+                    {props.rating_count} total
                     </Card.Text>
             </Card.Body>
             </Card>
