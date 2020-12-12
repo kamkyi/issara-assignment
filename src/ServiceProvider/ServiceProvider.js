@@ -6,8 +6,8 @@ import { FaUserAlt } from "react-icons/fa"
 const ServiceProvider = (props) => {
     return (
         <div>
-            <Card style={{ width: '18rem' }}>
-            <Card.Img height="280px" variant="top" src={props.logo} />
+            <Card>
+            <Card.Img height="230px" variant="top" src={props.logo} />
             <Card.Body>
                 <Card.Title>{props.name}</Card.Title>
                 <Card.Text>

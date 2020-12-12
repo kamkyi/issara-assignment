@@ -77,7 +77,7 @@ class App extends Component {
                 <Row>
                 {
                     this.state.service_providers.map((provider,index) => {
-                      return <Col md={4} key={index}>
+                      return <Col md={3} key={index}>
                         <ServiceProvider name={provider.name}
                           key={provider.email}
                           email={provider.email}
