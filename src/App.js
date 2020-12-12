@@ -9,7 +9,8 @@ import axios from 'axios'
 class App extends Component {
   state = {
     languages: [],
-    service_providers:null
+    service_providers: null,
+    defaultLocale:localStorage['locale'] ? localStorage['locale'] : 'en'
   }
   componentWillMount() {
     axios.get('/localization/languages')
@@ -20,8 +21,20 @@ class App extends Component {
     });
   }
 
+  componentDidMount() {
+    const locale = this.state.defaultLocale;
+
+    axios.get('/service-providers?lang=' + locale)
+    .then(response => {
+      this.setState({
+         service_providers:response.data
+      })
+    });
+  }
+
   chooseLanguageHandler = (languageCode) => {
-    // window.alert(languageCode);
+    localStorage.setItem('locale', languageCode)
+    
     axios.get('/service-providers?lang=' + languageCode)
       .then(response => {
         this.setState({
@@ -33,10 +46,11 @@ class App extends Component {
   render() {
     return (
       <div>
-        <NavBar languages={this.state.languages} chosen={this.chooseLanguageHandler}/>
+        <NavBar languages={this.state.languages} chosen={this.chooseLanguageHandler} />
         <Container>
+        <br />
+        <br/>
           <Row>
-    
               {
                 this.state.service_providers ? 
                   this.state.service_providers.map(provider => {
@@ -45,6 +59,7 @@ class App extends Component {
                       website={provider.website}
                       rating_score={provider.rating_score}
                       rating_count={provider.rating_count}
+                      logo={provider.image}
                     /></Col>              
                   })
                 :null

@@ -1,4 +1,4 @@
-import { Navbar,Nav,NavDropdown } from "react-bootstrap"
+import { Image,Navbar,Nav,NavDropdown } from "react-bootstrap"
 
 const NavBar = (props) => {
     return (
@@ -10,7 +10,7 @@ const NavBar = (props) => {
                 <NavDropdown title="Choose Language" id="change-language-nav-dropdown">
                 {
                     props.languages.map(language => {
-                        return <NavDropdown.Item key={language.code} onClick={props.chosen.bind(this,language.code)}>{language.name}</NavDropdown.Item>
+                        return <NavDropdown.Item key={language.code} onClick={props.chosen.bind(this,language.code)}> <Image width="30px" src={language.flag} thumbnail /> {language.name}</NavDropdown.Item>
                     })           
                 }
             </NavDropdown>
