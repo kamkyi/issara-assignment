@@ -1,7 +1,7 @@
 import { Card } from 'react-bootstrap'
 import ReactStars from "react-rating-stars-component";
 import './ServiceProvider.css'
-import { FaUserAlt } from "react-icons/fa"
+import { FaUserAlt,FaGlobe,FaRegEnvelope } from "react-icons/fa"
 
 const ServiceProvider = (props) => {
     return (
@@ -10,11 +10,14 @@ const ServiceProvider = (props) => {
             <Card.Img height="230px" variant="top" src={props.logo} />
             <Card.Body>
                 <Card.Title>{props.name}</Card.Title>
-                <Card.Text>
-                    Email : {props.email??'N/A'}
+                    <Card.Text>
+                        <FaRegEnvelope /> Email : <br />
+                        {props.email ?
+                            <a href={"mailto:" + props.email}>{props.email}</a>:'N/A'
+                        }
                     </Card.Text>
                     <Card.Text>
-                    Website : {props.website?? 'N/A'}
+                    <FaGlobe/> Website : <br/> <a href={props.website?? '#'}>{props.website?? 'N/A'}</a>
                     </Card.Text>
                     <h2>{Math.round(props.rating_score*10)/10}</h2> 
                     <ReactStars
