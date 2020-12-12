@@ -12,7 +12,8 @@ class App extends Component {
   state = {
     languages: [],
     service_providers: null,
-    defaultLocale:localStorage['locale'] ? localStorage['locale'] : 'en'
+    defaultLocale: localStorage['locale'] ? localStorage['locale'] : 'en',
+    flag:''
   }
 
   componentWillMount() {
@@ -21,6 +22,19 @@ class App extends Component {
       this.setState({
           languages:response.data
       })
+      
+      const languageIndex = this.state.languages.findIndex(language => {
+        return language.code === this.state.defaultLocale;
+      })
+
+      const defaultLanguageBundle = { ...this.state.languages[languageIndex] }
+
+      localStorage.setItem('flag', defaultLanguageBundle.flag)
+
+      this.setState({
+        flag:defaultLanguageBundle.flag
+      })
+
     });
   }
 
@@ -35,8 +49,14 @@ class App extends Component {
     });
   }
 
-  chooseLanguageHandler = (languageCode) => {
+  chooseLanguageHandler = (languageCode, flag) => {
+    
     localStorage.setItem('locale', languageCode)
+    localStorage.setItem('flag', flag)
+
+    this.setState({
+      flag:flag
+    })
     
     axios.get('/service-providers?lang=' + languageCode)
       .then(response => {
@@ -49,7 +69,7 @@ class App extends Component {
   render() {
     return (
       <div>
-        <NavBar languages={this.state.languages} chosen={this.chooseLanguageHandler} />
+        <NavBar languages={this.state.languages} chosen={this.chooseLanguageHandler} flag={this.state.flag}/>
         <Container>
         <br />
         <br/>
