@@ -4,9 +4,9 @@ import './index.css';
 import App from './App';
 import reportWebVitals from './reportWebVitals';
 import axios from 'axios'
+import * as allStatic from './constant/'
 
-//axios.defaults.baseURL = 'https://cors-anywhere.herokuapp.com/https://server-dot-ilm-client-dev.appspot.com/api/v1';
-axios.defaults.baseURL = 'https://server-dot-ilm-client-dev.appspot.com/api/v1';
+axios.defaults.baseURL = allStatic.BASE_URL;
 
 ReactDOM.render(
   <React.StrictMode>
