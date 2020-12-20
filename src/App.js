@@ -5,18 +5,19 @@ import 'bootstrap/dist/css/bootstrap.min.css';
 import NavBar from './NavBar/NavBar'
 import ServiceProvider from './ServiceProvider/ServiceProvider'
 import axios from 'axios'
+import * as allStatic from './constant/'
 
 class App extends Component {
 
   state = {
     languages: [],
     service_providers: null,
-    defaultLocale: localStorage['locale'] ? localStorage['locale'] : 'en',
+    defaultLocale: localStorage['locale'] ? localStorage['locale'] : allStatic.DEFAULT_LOCALE,
     language:localStorage['language'] ? localStorage['language'] : {},
   }
 
   componentWillMount() {
-    axios.get('/localization/languages')
+    axios.get(allStatic.LANGUAGES_URL)
     .then(response => {
       this.setState({
           languages:response.data
@@ -40,7 +41,7 @@ class App extends Component {
   componentDidMount() {
     const locale = this.state.defaultLocale;
 
-    axios.get('/service-providers?lang=' + locale)
+    axios.get(allStatic.PROVIDERS_URL + locale)
     .then(response => {
       this.setState({
          service_providers:response.data
