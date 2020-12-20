@@ -1,4 +1,5 @@
-import { Image,Navbar,Nav,NavDropdown } from "react-bootstrap"
+import React from 'react';
+import { Image, Navbar, Nav, NavDropdown } from "react-bootstrap"
 
 const NavBar = (props) => {
     return (
@@ -21,4 +22,4 @@ const NavBar = (props) => {
     )
 }
 
-export default NavBar;
+export default React.memo(NavBar);
