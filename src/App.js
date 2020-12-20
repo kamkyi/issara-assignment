@@ -10,20 +10,14 @@ import cookie from 'js-cookie';
 
 class App extends Component {
 
-  constructor(props){  
-    super(props);  
-    this.state = {
-      languages: [],
-      service_providers: null,
-      defaultLocale: cookie.get('locale') ? cookie.get('locale') : allStatic.DEFAULT_LOCALE,
-      language:cookie.get('language') ? cookie.get('language') : {},
-    }
+  state = {
+    languages: [],
+    service_providers: null,
+    defaultLocale: cookie.get('locale') ? cookie.get('locale') : allStatic.DEFAULT_LOCALE,
+    language:cookie.get('language') ? cookie.get('language') : {},
+  }
 
-    this.handleLanguage()
-  }  
-
-  handleLanguage = () => {
-    
+  componentWillMount() {
     axios.get(allStatic.LANGUAGES_URL)
     .then(response => {
       this.setState({
