@@ -6,17 +6,24 @@ import NavBar from './NavBar/NavBar'
 import ServiceProvider from './ServiceProvider/ServiceProvider'
 import axios from 'axios'
 import * as allStatic from './constant/'
+import cookie from 'js-cookie';
 
 class App extends Component {
 
-  state = {
-    languages: [],
-    service_providers: null,
-    defaultLocale: localStorage['locale'] ? localStorage['locale'] : allStatic.DEFAULT_LOCALE,
-    language:localStorage['language'] ? localStorage['language'] : {},
-  }
+  constructor(props){  
+    super(props);  
+    this.state = {
+      languages: [],
+      service_providers: null,
+      defaultLocale: cookie.get('locale') ? cookie.get('locale') : allStatic.DEFAULT_LOCALE,
+      language:cookie.get('language') ? cookie.get('language') : {},
+    }
 
-  componentWillMount() {
+    this.handleLanguage()
+  }  
+
+  handleLanguage = () => {
+    
     axios.get(allStatic.LANGUAGES_URL)
     .then(response => {
       this.setState({
@@ -29,7 +36,7 @@ class App extends Component {
 
       const currentLanguage = { ...this.state.languages[languageIndex] }
 
-      localStorage.setItem('language', currentLanguage)
+      cookie.set('language', currentLanguage,{expires:1})
 
       this.setState({
         language:currentLanguage
@@ -51,8 +58,8 @@ class App extends Component {
 
   chooseLanguageHandler = (languageCode, language) => {
     
-    localStorage.setItem('locale', languageCode)
-    localStorage.setItem('language', language)
+    cookie.set('locale', languageCode)
+    cookie.set('language', language)
 
     this.setState({
       language:language
